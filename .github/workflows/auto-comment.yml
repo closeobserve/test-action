@@ -1,0 +1,20 @@
+name: Auto Comment on New Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  auto-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '感谢你提出这个issue! 请查看我们的文档: https://your-docs-url.com'
+            })
